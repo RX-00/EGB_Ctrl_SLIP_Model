@@ -20,7 +20,7 @@ function dy = SLIP_Stance(t, q, s)
     % Functions that describe the motion of the SLIP Model's COM
     d = sqrt((x - xtd)^2 + (y - ytd)^2); % Calculate spring leg length
     assert(d ~= 0, 'COM distance from zero must not be zero')
-    sinT = y / d;                        % Calculate sin(theta) value based on lengths, I believe this was a left over from not originally including theta in the state vector, although I am not 100% sure the theta in the state vector is updated enough to use it instead of this, I do not think so currently as it is only changed by the controller or natural dynamics of the system, so theta is not a sweeping record of the angle of the leg, only the angle of attack, aka touchdown angle
+    sinT = (y - ytd)/ d;                 % Calculate sin(theta) value based on lengths, I believe this was a left over from not originally including theta in the state vector, although I am not 100% sure the theta in the state vector is updated enough to use it instead of this, I do not think so currently as it is only changed by the controller or natural dynamics of the system, so theta is not a sweeping record of the angle of the leg, only the angle of attack, aka touchdown angle
     cosT = (x - xtd)/ d;                 % Calculate cos(theta) value based on lengths
     Fs = s.k * (s.d0 - d);               % Force of the spring
     Fy = Fs * sinT;                      % y-component of the force of the spring

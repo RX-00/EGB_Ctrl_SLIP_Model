@@ -24,7 +24,7 @@ input.g = 9.81;                       % gravity constant (m/s/s)
 input.d_fwrd_vel = 0.9;               % target forward velocity (m/s)
 input.currentApexY = 0;               % current apex height y_i (m)
 input.prevApexY = 0;                  % previous apex height y_i-1 (m)
-input.gnd_height = 0;                 % height of the ground at a specific point along the x-axis
+input.gnd_height = 0.1;                 % height of the ground at a specific point along the x-axis, randomly generated
 
 % Starting conditions of the state vector x, fwrd vel, y, upwrd vel,
 % foot position upon touchdown, and what phase you're in (0 for flight, 1
@@ -52,7 +52,7 @@ optionsStance = odeset('Events', stanceEvent, 'OutputFcn', @odeplot, 'OutputSel'
     'Refine', refine); % End of stance trigger, is passed to ODE for stance
 
 % time stuff
-tspan = [0 50];        % How long in seconds the simulation will run for
+tspan = [0 25];        % How long in seconds the simulation will run for
 tStep = 0.009;         % How big of a time step the simulation moves through when solving
 tstart = tspan(1);     % Start of the simulation time
 tend = tspan(end);     % End of the simulation time

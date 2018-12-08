@@ -13,14 +13,14 @@ function [] = animate_SLIP(q, s, t)
     ylabel('height');
     
     % used to calculate the leg length
-    x = q(1, 1);                    % initial x body position
-    y = q(1, 3);                    % initial y body position
-    xtd = q(1, 5);                  % initial x touchdown of the foot
-    ytd = 0;                        % initial y touchdown of the foot
-    d = sqrt((x - xtd)^2 + (y)^2);  % initial length of the spring leg
+    x = q(1, 1);                         % initial x body position
+    y = q(1, 3);                         % initial y body position
+    xtd = q(1, 5);                       % initial x touchdown of the foot
+    ytd = s.gnd_height;                  % initial y touchdown of the foot
+    d = sqrt((x - xtd)^2 + (y - ytd)^2); % initial length of the spring leg
     
     % Visual patches
-    ground_patch = patch([-100, -100, 100, 100], [0, -10, -10, 0], [0.5, 0.5, 0.5]); % ground patch
+    ground_patch = patch([-100, -100, 100, 100], [s.gnd_height, -10, -10, s.gnd_height], [0.5, 0.5, 0.5]); % ground patch
     
     body_patch = patch(q(1, 1) + 0.1 * sin(0: 0.1: 2 * pi), q(1, 3) + 0.1 * cos(0: 0.1: 2 * pi), [70, 216, 226]./255); % body patch of the mass of the SLIP model
     
@@ -42,12 +42,12 @@ function [] = animate_SLIP(q, s, t)
         body_patch.Vertices = [q(i, 1) + 0.1 * sin(0: 0.1: 2 * pi); q(i, 3) + 0.1 * cos(0: 0.1: 2 * pi)]';
         
         % used to calculate the leg length
-        x = q(i, 1);                     % current x body position
-        y = q(i, 3);                     % current y body position
-        xtd = q(i, 5);                   % current x touchdown of the foot
-        ytd = 0;                         % current y touchdown of the foot
-        d0 = s.d0;                       % current leg length (just did this since I was too lazy to type s. multiple times for some reason)
-        d = sqrt((x - xtd)^2 + (y)^2);   % current length of the spring leg
+        x = q(i, 1);                         % current x body position
+        y = q(i, 3);                         % current y body position
+        xtd = q(i, 5);                       % current x touchdown of the foot
+        ytd = s.gnd_height;                  % current y touchdown of the foot
+        d0 = s.d0;                           % current leg length (just did this since I was too lazy to type s. multiple times for some reason)
+        d = sqrt((x - xtd)^2 + (y - ytd)^2); % current length of the spring leg
          
         
         % NOTE: This algorithm was originally for pitch angle of the leg
